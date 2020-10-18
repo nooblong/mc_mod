@@ -20,14 +20,6 @@ build
 # other
 eclipse
 run
-forge-1.12.2-14.23.5.2768-changelog.txt
-gradle.properties
-gradle/wrapper/gradle-wrapper.jar
-gradle/wrapper/gradle-wrapper.properties
-gradlew
-gradlew.bat
-LICENSE-Paulscode IBXM Library.txt
-CREDITS.txt
-LICENSE.txt
-README.txt
-LICENSE-Paulscode SoundSystem CodecIBXM.txt
+
+# Files from Forge MDK
+forge*changelog.txt
