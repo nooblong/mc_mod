@@ -1,7 +1,9 @@
 package github.nooblong.mr;
 
 import github.nooblong.mr.init.ModBlocks;
+import github.nooblong.mr.init.ModContainerTypes;
 import github.nooblong.mr.init.ModItems;
+import github.nooblong.mr.init.ModTileEntityTypes;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,6 +24,8 @@ public class MusicRestaurant {
 
         ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModContainerTypes.CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModTileEntityTypes.TILE_ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 
         MinecraftForge.EVENT_BUS.register(this);
     }

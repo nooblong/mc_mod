@@ -18,4 +18,7 @@ public class ModItems {
     //blockItem
     public static final RegistryObject<Item> RUBY_BLOCK_ITEM = ITEMS.register("ruby_block",
             () -> new BlockItemBase(ModBlocks.RUBY_BLOCK.get()));
+
+    public static final RegistryObject<Item> RUBY_CHEST_ITEM = ITEMS.register("ruby_chest",
+            ()->new BlockItemBase(ModBlocks.RUBY_CHEST.get()));
 }

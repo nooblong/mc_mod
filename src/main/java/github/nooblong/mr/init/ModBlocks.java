@@ -2,6 +2,7 @@ package github.nooblong.mr.init;
 
 import github.nooblong.mr.MusicRestaurant;
 import github.nooblong.mr.blocks.BlockBase;
+import github.nooblong.mr.blocks.RubyChestBlock;
 import net.minecraft.block.Block;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -12,4 +13,5 @@ public class ModBlocks {
 
     //blocks
     public static final RegistryObject<Block> RUBY_BLOCK = BLOCKS.register("ruby_block", BlockBase::new);
+    public static final RegistryObject<Block> RUBY_CHEST = BLOCKS.register("ruby_chest", RubyChestBlock::new);
 }
