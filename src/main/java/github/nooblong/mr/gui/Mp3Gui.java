@@ -16,6 +16,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class Mp3Gui extends Screen {
@@ -69,32 +70,34 @@ public class Mp3Gui extends Screen {
                 0, 0, 0, ICON,
                 (i) -> {
                     if (minecraft != null) {
-//                        MySimpleNetworkHandler.sendToServer("file.ogg", "hello".getBytes());//[104, 101, 108, 108, 111]
-                        byte[] toSend = OperateFile.readOgg(path.getText());
-                        if (toSend != null) {
-                            MySimpleNetworkHandler.sendToServer(OperateFile.getFileName(path.getText()), toSend);
-                            System.out.println("send packet");
+                        List<byte[]> toSend = OperateFile.readOgg(path.getText());
+                        byte[] lastBytes = toSend.get(toSend.size() - 1);
+                        for (byte[] bytes : toSend) {
+                            MySimpleNetworkHandler.sendToServer(OperateFile.getFileName(path.getText()), bytes, toSend.size(), lastBytes.length);
                         }
+                        //finish mark
+                        MySimpleNetworkHandler.sendToServer("finish", new byte[]{1}, toSend.size(), lastBytes.length);
+                        
                     }
                 }));
 
         //第一个位置
         TextFieldWidget pos1x = new TextFieldWidget(font, (this.width - BG_WIDTH) / 2 + 5,
-                (this.height - BG_HEIGHT) / 2 + 50, BG_WIDTH/3, 20, "pos1x");
+                (this.height - BG_HEIGHT) / 2 + 50, BG_WIDTH / 3, 20, "pos1x");
         path.setMaxStringLength(100);
         path.setResponder((s -> {
             MusicRestaurant.LOGGER.info("pos1x");
         }));
         textFields.put("pos1x", pos1x);
         TextFieldWidget pos1y = new TextFieldWidget(font, (this.width - BG_WIDTH) / 2 + 5 + 58,
-                (this.height - BG_HEIGHT) / 2 + 50, BG_WIDTH/3, 20, "pos1y");
+                (this.height - BG_HEIGHT) / 2 + 50, BG_WIDTH / 3, 20, "pos1y");
         path.setMaxStringLength(100);
         path.setResponder((s -> {
             MusicRestaurant.LOGGER.info("pos1y");
         }));
         textFields.put("pos1y", pos1y);
         TextFieldWidget pos1z = new TextFieldWidget(font, (this.width - BG_WIDTH) / 2 + 5 + 58 + 58,
-                (this.height - BG_HEIGHT) / 2 + 50, BG_WIDTH/3, 20, "pos1z");
+                (this.height - BG_HEIGHT) / 2 + 50, BG_WIDTH / 3, 20, "pos1z");
         path.setMaxStringLength(100);
         path.setResponder((s -> {
             MusicRestaurant.LOGGER.info("pos1z");

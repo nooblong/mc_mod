@@ -33,9 +33,9 @@ public class MySimpleNetworkHandler {
         );
     }
 
-    public static void sendToServer(String name, byte[] bytes){
+    public static void sendToServer(String name, byte[] bytes, int packageNum, int lastPackageSize){
         int length = bytes.length;
-        MusicPacket packet = new MusicPacket(name, length, bytes);
+        MusicPacket packet = new MusicPacket(name, length, bytes, packageNum, lastPackageSize);
         INSTANCE.sendToServer(packet);
     }
 
