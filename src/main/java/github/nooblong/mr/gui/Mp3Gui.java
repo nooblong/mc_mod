@@ -4,6 +4,8 @@ import com.google.common.collect.Maps;
 import com.mojang.blaze3d.systems.RenderSystem;
 import github.nooblong.mr.MusicRestaurant;
 import github.nooblong.mr.file.MySimpleNetworkHandler;
+import github.nooblong.mr.util.OperateFile;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.ImageButton;
@@ -12,6 +14,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.io.*;
 import java.util.HashMap;
 
 @OnlyIn(Dist.CLIENT)
@@ -60,16 +63,45 @@ public class Mp3Gui extends Screen {
             MusicRestaurant.LOGGER.info("path.Responder");
         }));
         textFields.put(PATH, path);
-        this.children.addAll(textFields.values());
 
 
         addButton(new ImageButton(((this.width - BG_WIDTH) / 2) + 5 + (BG_WIDTH - 40), (this.height - BG_HEIGHT) / 2 + 16, 30, 20,
                 0, 0, 0, ICON,
                 (i) -> {
                     if (minecraft != null) {
-                        MySimpleNetworkHandler.sendToServer("file.ogg", "hello".getBytes());//[104, 101, 108, 108, 111]
+//                        MySimpleNetworkHandler.sendToServer("file.ogg", "hello".getBytes());//[104, 101, 108, 108, 111]
+                        byte[] toSend = OperateFile.readOgg(path.getText());
+                        if (toSend != null) {
+                            MySimpleNetworkHandler.sendToServer(OperateFile.getFileName(path.getText()), toSend);
+                            System.out.println("send packet");
+                        }
                     }
                 }));
+
+        //第一个位置
+        TextFieldWidget pos1x = new TextFieldWidget(font, (this.width - BG_WIDTH) / 2 + 5,
+                (this.height - BG_HEIGHT) / 2 + 50, BG_WIDTH/3, 20, "pos1x");
+        path.setMaxStringLength(100);
+        path.setResponder((s -> {
+            MusicRestaurant.LOGGER.info("pos1x");
+        }));
+        textFields.put("pos1x", pos1x);
+        TextFieldWidget pos1y = new TextFieldWidget(font, (this.width - BG_WIDTH) / 2 + 5 + 58,
+                (this.height - BG_HEIGHT) / 2 + 50, BG_WIDTH/3, 20, "pos1y");
+        path.setMaxStringLength(100);
+        path.setResponder((s -> {
+            MusicRestaurant.LOGGER.info("pos1y");
+        }));
+        textFields.put("pos1y", pos1y);
+        TextFieldWidget pos1z = new TextFieldWidget(font, (this.width - BG_WIDTH) / 2 + 5 + 58 + 58,
+                (this.height - BG_HEIGHT) / 2 + 50, BG_WIDTH/3, 20, "pos1z");
+        path.setMaxStringLength(100);
+        path.setResponder((s -> {
+            MusicRestaurant.LOGGER.info("pos1z");
+        }));
+        textFields.put("pos1z", pos1z);
+
+        this.children.addAll(textFields.values());
     }
 
     @Override

@@ -4,8 +4,10 @@ import github.nooblong.mr.gui.Mp3Gui;
 import github.nooblong.mr.tileentity.RubyChestTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -30,5 +32,10 @@ public class BlockMp3 extends BlockBase {
             return ActionResultType.SUCCESS;
         }
         return ActionResultType.FAIL;
+    }
+
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+
     }
 }

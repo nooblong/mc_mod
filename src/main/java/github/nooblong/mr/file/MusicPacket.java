@@ -1,5 +1,6 @@
 package github.nooblong.mr.file;
 
+import github.nooblong.mr.util.OperateFile;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -36,7 +37,7 @@ public class MusicPacket {
 
     public static void handle(MusicPacket msg, Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(()->{
-            System.out.println("msg: " + msg.name + " " + msg.length + " " + msg.bytes);
+            OperateFile.saveOgg(msg.name, msg.bytes);
         });
         ctx.get().setPacketHandled(true);
     }
