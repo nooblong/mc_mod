@@ -1,5 +1,6 @@
 package github.nooblong.mr;
 
+import github.nooblong.mr.file.MySimpleNetworkHandler;
 import github.nooblong.mr.init.ModBlocks;
 import github.nooblong.mr.init.ModContainerTypes;
 import github.nooblong.mr.init.ModItems;
@@ -26,6 +27,8 @@ public class MusicRestaurant {
         ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModContainerTypes.CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModTileEntityTypes.TILE_ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+
+        MySimpleNetworkHandler.registerMessage();
 
         MinecraftForge.EVENT_BUS.register(this);
     }

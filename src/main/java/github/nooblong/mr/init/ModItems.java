@@ -21,4 +21,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> RUBY_CHEST_ITEM = ITEMS.register("ruby_chest",
             ()->new BlockItemBase(ModBlocks.RUBY_CHEST.get()));
+
+    public static final RegistryObject<Item> MP3_ITEM = ITEMS.register("mp3",
+            ()->new BlockItemBase(ModBlocks.MP3.get()));
 }
