@@ -4,8 +4,11 @@ import com.google.common.collect.Maps;
 import com.mojang.blaze3d.systems.RenderSystem;
 import github.nooblong.mr.MusicRestaurant;
 import github.nooblong.mr.file.MySimpleNetworkHandler;
+import github.nooblong.mr.init.ModSounds;
 import github.nooblong.mr.util.OperateFile;
+import github.nooblong.mr.util.ReflectionUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.ImageButton;
@@ -77,7 +80,17 @@ public class Mp3Gui extends Screen {
                         }
                         //finish mark
                         MySimpleNetworkHandler.sendToServer("finish", new byte[]{1}, toSend.size(), lastBytes.length);
-                        
+                        ClientPlayerEntity player = Minecraft.getInstance().player;
+                        player.sendChatMessage("upload success");
+
+                    }
+                }));
+
+        addButton(new ImageButton(((this.width - BG_WIDTH) / 2) + 5 + (BG_WIDTH - 40), (this.height - BG_HEIGHT) / 2 + 16 +  40, 16, 16,
+                0, 0, 0, ICON,
+                (i) -> {
+                    if (minecraft != null) {
+                        ReflectionUtils.getSoundPath();
                     }
                 }));
 

@@ -1,0 +1,11 @@
+{
+  "test": {
+    "category": "record",
+    "subtitle": "sound.test",
+    "sounds": [
+      {
+        "name": "mr:test"
+      }
+    ]
+  }
+}

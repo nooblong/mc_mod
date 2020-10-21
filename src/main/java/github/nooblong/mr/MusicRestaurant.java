@@ -1,10 +1,7 @@
 package github.nooblong.mr;
 
 import github.nooblong.mr.file.MySimpleNetworkHandler;
-import github.nooblong.mr.init.ModBlocks;
-import github.nooblong.mr.init.ModContainerTypes;
-import github.nooblong.mr.init.ModItems;
-import github.nooblong.mr.init.ModTileEntityTypes;
+import github.nooblong.mr.init.*;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
