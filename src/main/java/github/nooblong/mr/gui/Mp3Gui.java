@@ -3,160 +3,172 @@ package github.nooblong.mr.gui;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.systems.RenderSystem;
 import github.nooblong.mr.MusicRestaurant;
+import github.nooblong.mr.file.GuiDataPacket;
 import github.nooblong.mr.file.MySimpleNetworkHandler;
-import github.nooblong.mr.init.ModSounds;
-import github.nooblong.mr.util.OperateFile;
-import github.nooblong.mr.util.ReflectionUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import github.nooblong.mr.tileentity.Mp3TileEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.ImageButton;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.io.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UnknownFormatConversionException;
 
-@OnlyIn(Dist.CLIENT)
 public class Mp3Gui extends Screen {
-
-    private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(
-            MusicRestaurant.MOD_ID, "textures/gui/mp3.png"
-    );
-    private static final ResourceLocation ICON = new ResourceLocation(
-            MusicRestaurant.MOD_ID, "textures/gui/icon.png"
-    );
-
-    private static final String PATH = "path";
-
-    private static final int BG_WIDTH = 175;
-    private static final int BG_HEIGHT = 221;
-
-    public Mp3Gui() {
-        super(new StringTextComponent("mr.mp3"));
-    }
-
+    protected static final ResourceLocation ICON = new ResourceLocation(MusicRestaurant.MOD_ID, "textures/gui/icon.png");
+    private final HashMap<String, TextFieldWidget> textFields = Maps.newHashMap();
     protected int configWidth;
     protected int configHeight;
     protected int configStartX;
     protected int configStartY;
 
-    private final HashMap<String, TextFieldWidget> textFields = Maps.newHashMap();
+    Mp3TileEntity mp3TileEntity;
+
+    public Mp3Gui(Mp3TileEntity mp3TileEntity) {
+        super(new StringTextComponent("mr.mp3"));
+        this.mp3TileEntity = mp3TileEntity;
+    }
+
+    public Mp3Gui(){
+        super(new StringTextComponent("mr.mp3"));
+    }
+
+    /**
+     * 添加文本框
+     *
+     * @param textFields 文本框组
+     */
+    public  void addTextFields(HashMap<String, TextFieldWidget> textFields){
+
+    };
+
+    /**
+     * 绘制配置界面自己的元素
+     */
+    public void drawConfigScreen(int mouseX, int mouseY, float partialTicks){
+
+    };
 
     @Override
     public void init() {
         this.buttons.clear();
         this.textFields.clear();
 
-        configHeight = 175;
-        configWidth = 211;
-        configStartX = 0;
-        configStartY = 0;
+        if (minecraft != null) {
+            minecraft.keyboardListener.enableRepeatEvents(true);
+        }
 
-//        this.addTextFields(textFields);
+        configHeight = height - 10;
+        configWidth = width - 260;
+        configStartX = 105;
+        configStartY = 5;
 
-        //添加输入框
-        TextFieldWidget path = new TextFieldWidget(font, (this.width - BG_WIDTH) / 2 + 5,
-                (this.height - BG_HEIGHT) / 2 + 16, BG_WIDTH - 40, 20, "path");
-        path.setMaxStringLength(100);
-        path.setResponder((s -> {
-            MusicRestaurant.LOGGER.info("path.Responder");
-        }));
-        textFields.put(PATH, path);
-
-
-        addButton(new ImageButton(((this.width - BG_WIDTH) / 2) + 5 + (BG_WIDTH - 40), (this.height - BG_HEIGHT) / 2 + 16, 30, 20,
-                0, 0, 0, ICON,
-                (i) -> {
-                    if (minecraft != null) {
-                        List<byte[]> toSend = OperateFile.readOgg(path.getText());
-                        byte[] lastBytes = toSend.get(toSend.size() - 1);
-                        for (byte[] bytes : toSend) {
-                            MySimpleNetworkHandler.sendToServer(OperateFile.getFileName(path.getText()), bytes, toSend.size(), lastBytes.length);
-                        }
-                        //finish mark
-                        MySimpleNetworkHandler.sendToServer("finish", new byte[]{1}, toSend.size(), lastBytes.length);
-                        ClientPlayerEntity player = Minecraft.getInstance().player;
-                        player.sendChatMessage("upload success");
-
-                    }
-                }));
-
-        addButton(new ImageButton(((this.width - BG_WIDTH) / 2) + 5 + (BG_WIDTH - 40), (this.height - BG_HEIGHT) / 2 + 16 +  40, 16, 16,
-                0, 0, 0, ICON,
-                (i) -> {
-                    if (minecraft != null) {
-                        ReflectionUtils.getSoundPath();
-                    }
-                }));
-
-        //第一个位置
-        TextFieldWidget pos1x = new TextFieldWidget(font, (this.width - BG_WIDTH) / 2 + 5,
-                (this.height - BG_HEIGHT) / 2 + 50, BG_WIDTH / 3, 20, "pos1x");
-        path.setMaxStringLength(100);
-        path.setResponder((s -> {
-            MusicRestaurant.LOGGER.info("pos1x");
-        }));
-        textFields.put("pos1x", pos1x);
-        TextFieldWidget pos1y = new TextFieldWidget(font, (this.width - BG_WIDTH) / 2 + 5 + 58,
-                (this.height - BG_HEIGHT) / 2 + 50, BG_WIDTH / 3, 20, "pos1y");
-        path.setMaxStringLength(100);
-        path.setResponder((s -> {
-            MusicRestaurant.LOGGER.info("pos1y");
-        }));
-        textFields.put("pos1y", pos1y);
-        TextFieldWidget pos1z = new TextFieldWidget(font, (this.width - BG_WIDTH) / 2 + 5 + 58 + 58,
-                (this.height - BG_HEIGHT) / 2 + 50, BG_WIDTH / 3, 20, "pos1z");
-        path.setMaxStringLength(100);
-        path.setResponder((s -> {
-            MusicRestaurant.LOGGER.info("pos1z");
-        }));
-        textFields.put("pos1z", pos1z);
-
+        this.addTextFields(textFields);
         this.children.addAll(textFields.values());
+
+        //上传
+        addButton(new ImageButton(2, 21, 96, 15,
+                128, 128, 0, ICON,
+                (i) -> {
+                    if (minecraft != null) {
+                        minecraft.displayGuiScreen(new Mp3UploadGui(mp3TileEntity));
+                    }
+                }));
+//        buttons.add(new ImageButton(2, 21 + 15, 96, 15,
+//                128, 128, 0, ICON,
+//                (i) -> {
+//                    if (minecraft != null) {
+//                        minecraft.displayGuiScreen(new DanmakuGui(config));
+//                    }
+//                }));
+//        buttons.add(new ImageButton(2, 21 + 15 * 2, 96, 15,
+//                128, 128, 0, ICON,
+//                (i) -> {
+//                    if (minecraft != null) {
+//                        minecraft.displayGuiScreen(new GiftGui(config));
+//                    }
+//                }));
+//        buttons.add(new ImageButton(2, 21 + 15 * 3, 96, 15,
+//                128, 128, 0, ICON,
+//                (i) -> {
+//                    if (minecraft != null) {
+//                        minecraft.displayGuiScreen(new EnterGui(config));
+//                    }
+//                }));
+//        buttons.add(new ImageButton(2, 21 + 15 * 4, 96, 15,
+//                128, 128, 0, ICON,
+//                (i) -> {
+//                    if (minecraft != null) {
+//                        minecraft.displayGuiScreen(new GuardGui(config));
+//                    }
+//                }));
+//        buttons.add(new ImageButton(2, 21 + 15 * 5, 96, 15,
+//                128, 128, 0, ICON,
+//                (i) -> {
+//                    if (minecraft != null) {
+//                        minecraft.displayGuiScreen(new ScGui(config));
+//                    }
+//                }));
+
+        //保存并退出
+        addButton(new ImageButton(5, height - 50, 90, 20,
+                128, 128, 0, ICON,
+                (i) -> {
+                    if (minecraft != null) {
+                        minecraft.displayGuiScreen(null);
+                        saveAndQuit();
+                    }
+                }));
+        //直接退出
+        addButton(new ImageButton(2, height - 25, 96, 20,
+                128, 128, 0, ICON,
+                (i) -> {
+                    if (minecraft != null) {
+                        minecraft.displayGuiScreen(null);
+                    }
+                }));
     }
 
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
         renderBackground();
         // 左侧按钮列表
-//        fillGradient(0, 0, 100, height, 0xdd000000, 0xdd000000);
+        fillGradient(0, 0, 100, height, 0xdd000000, 0xdd000000);
         // 标题背景
-//        fillGradient(2, 2, 100 - 2, 20 - 2, 0xdd1f1f1f, 0xdd1f1f1f);
+        fillGradient(2, 2, 100 - 2, 20 - 2, 0xdd1f1f1f, 0xdd1f1f1f);
 
         // drawGradientRect(2, 25 - 4, 98, 25 + 15 - 4, 0xdd339966, 0xdd339966);
 
         // 右侧弹幕样式显示背景
-//        fillGradient(width - 150, 0, width, height, 0xdd1f1f1f, 0xdd1f1f1f);
+        fillGradient(width - 150, 0, width, height, 0xdd1f1f1f, 0xdd1f1f1f);
         // 中间配置界面
-//        fillGradient(configStartX, configStartY, configStartX + configWidth,
-//                configStartY + configHeight, 0xaa000000, 0xaa000000);
+        fillGradient(configStartX, configStartY, configStartX + configWidth,
+                configStartY + configHeight, 0xaa000000, 0xaa000000);
 
         // 最下方按钮
-//        fillGradient(5, height - 50, 95, height - 30, 0xff31343f, 0xff31343f);
-//        fillGradient(5, height - 25, 95, height - 5, 0xff31343f, 0xff31343f);
+        fillGradient(5, height - 50, 95, height - 30, 0xff31343f, 0xff31343f);
+        fillGradient(5, height - 25, 95, height - 5, 0xff31343f, 0xff31343f);
 
-//        drawConfigScreen(mouseX, mouseY, partialTicks);
+        drawConfigScreen(mouseX, mouseY, partialTicks);
 
-        font.drawString(".ogg路径", (this.width - BG_WIDTH) / 2.0f + 5, (this.height - BG_HEIGHT) / 2.0f + 3, 0xffffff);
-//        font.drawString("房间设置", 12, 25, 0xffffff);
+        font.drawString("配置界面", 6, 6, 0xffffff);
+        font.drawString("文件上传", 12, 25, 0xffffff);
 //        font.drawString("弹幕设置", 12, 25 + 15, 0xffffff);
 //        font.drawString("送礼设置", 12, 25 + 15 * 2, 0xffffff);
 //        font.drawString("进房设置", 12, 25 + 15 * 3, 0xffffff);
 //        font.drawString("上舰设置", 12, 25 + 15 * 4, 0xffffff);
 //        font.drawString("醒目留言（SC）", 12, 25 + 15 * 5, 0xffffff);
 
-//        String text1 = "保存并重载";
-//        font.drawString(text1, (100 - font.getStringWidth(text1)) / 2, height - 44, 0xffffff);
+        String text1 = "保存并重载";
+        font.drawString(text1, (100 - font.getStringWidth(text1)) / 2, height - 44, 0xffffff);
         String text2 = "直接退出";
         font.drawString(text2, (100 - font.getStringWidth(text2)) / 2, height - 19, 0xffffff);
 
-//        int startY = 10;
-//        int startX = width - 150 + 8;
+        int startY = 10;
+        int startX = width - 150 + 8;
 //        if (config.getDanmaku().isShow()) {
 //            startY = drawExampleMsg(config.getDanmaku().getNormalStyleFormatted(), startX, startY, "酒石酸菌", "我是普通观众");
 //            startY = drawExampleMsg(config.getDanmaku().getAdminStyleFormatted(), startX, startY, "琥珀酸", "我是房管");
@@ -174,13 +186,13 @@ public class Mp3Gui extends Screen {
 //            startY = drawExampleMsg(config.getEnter().getGuardStyle2Formatted(), startX, startY, "花玥");
 //            startY = drawExampleMsg(config.getEnter().getGuardStyle3Formatted(), startX, startY, "天顶乌");
 //        }
-//
+
 //        if (config.getGuard().isShow()) {
 //            startY = drawExampleMsg(config.getGuard().getGuardStyle1Formatted(), startX, startY, "迺逸夫");
 //            startY = drawExampleMsg(config.getGuard().getGuardStyle2Formatted(), startX, startY, "雪尼");
 //            startY = drawExampleMsg(config.getGuard().getGuardStyle3Formatted(), startX, startY, "青芙");
 //        }
-//
+
 //        if (config.getSc().isShow()) {
 //            startY = drawExampleMsg(config.getSc().getStyleFormatted(), startX, startY, "秋夕", "这是醒目留言！！！", 943);
 //        }
@@ -193,12 +205,33 @@ public class Mp3Gui extends Screen {
         super.render(mouseX, mouseY, partialTicks);
     }
 
+    private int drawExampleMsg(String style, int x, int y, Object... args) {
+        String text = "格式错误！";
+        try {
+            text = String.format(style, args);
+        } catch (UnknownFormatConversionException ignore) {
+        }
+        font.drawString(text, x, y, 0xffffff);
+        y += 10;
+        return y;
+    }
+
     @Override
-    public void renderBackground() {
-        RenderSystem.color4f(1f, 1f, 1f, 0.5f);
-        this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
-        int x = (this.width - BG_WIDTH) / 2;
-        int y = (this.height - BG_HEIGHT) / 2;
-        this.blit(x, y, 0, 0, 175, 221);
+    public void tick() {
+        for (TextFieldWidget textField : textFields.values()) {
+            textField.tick();
+        }
+    }
+
+    @Override
+    public void removed() {
+        super.removed();
+        if (minecraft != null) {
+            minecraft.keyboardListener.enableRepeatEvents(false);
+        }
+    }
+
+    public void saveAndQuit(){
+
     }
 }

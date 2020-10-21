@@ -10,7 +10,7 @@ import java.lang.reflect.Field;
 
 public class ReflectionUtils {
 
-    public static void getSoundPath(){
+    public static String getSoundPath(){
         try {
 
             Minecraft minecraft = Minecraft.getInstance();
@@ -21,13 +21,13 @@ public class ReflectionUtils {
 
             String path = ((File)skinCacheDir).getPath();
 
+            path = path.substring(0, path.length()-6);
 
-            for (int i = 0; i < 20; i++) {
-                System.out.println(path);
-            }
+            return path;
 
         } catch (Exception e){
             e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 

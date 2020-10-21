@@ -26,7 +26,7 @@ public class OperateFile {
             }
 
             out = new BufferedOutputStream(new FileOutputStream(file));
-            for (byte[] b : bytesList){
+            for (byte[] b : bytesList) {
                 out.write(b);
             }
             out.flush();
@@ -50,7 +50,7 @@ public class OperateFile {
             file = new File(path);
             List<byte[]> bytes = splitBySize(file, 20000);
             return bytes;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -68,7 +68,7 @@ public class OperateFile {
         long offset = 0;
         //总共要分成几块
         int count = (int) Math.ceil(length / (double) byteSize);
-        for (int i = 0; i < count-1; i++) {
+        for (int i = 0; i < count - 1; i++) {
             byte[] bytes = new byte[byteSize];
             rf.read(bytes);
             offset = (i + 1) * byteSize;
@@ -76,29 +76,43 @@ public class OperateFile {
             parts.add(bytes);
         }
         long leftSize = length - offset;
-        byte[] bytes = new byte[(int)leftSize];
+        byte[] bytes = new byte[(int) leftSize];
         rf.read(bytes);
         parts.add(bytes);
         return parts;
     }
 
-    public static void main(String[] args) {
-        File file = new File("D:\\FFOutput\\bdth.ogg");
-        try {
-            List<byte[]> bytes = splitBySize(file, 5000);
-            System.out.println(bytes.size());
-
-            File out = new File("D:\\FFOutput\\bdth2.ogg");
-            OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(out));
-            for (byte[] b : bytes){
-                outputStream.write(b);
+    public static List<String> getMusicList() {
+        List<String> list = new ArrayList<>();
+        File music = new File("music");
+        File[] files = music.listFiles();
+        if (files != null) {
+            for (File f : files) {
+                list.add(f.getName());
+                System.out.println(f.getName());
             }
-            outputStream.flush();
-            outputStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+        return list;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getMusicList());
+//        File file = new File("D:\\FFOutput\\bdth.ogg");
+//        try {
+//            List<byte[]> bytes = splitBySize(file, 5000);
+//            System.out.println(bytes.size());
+//
+//            File out = new File("D:\\FFOutput\\bdth2.ogg");
+//            OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(out));
+//            for (byte[] b : bytes) {
+//                outputStream.write(b);
+//            }
+//            outputStream.flush();
+//            outputStream.close();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
 }

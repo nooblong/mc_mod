@@ -174,4 +174,5 @@ public class RubyChestTileEntity extends LockableLootTileEntity {
             itemHandler.invalidate();
         }
     }
+
 }
