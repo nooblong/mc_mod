@@ -1,6 +1,5 @@
-package github.nooblong.mr.file;
+package github.nooblong.mr.net;
 
-import github.nooblong.mr.util.OperateFile;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 

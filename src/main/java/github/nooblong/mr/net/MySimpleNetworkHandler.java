@@ -1,19 +1,13 @@
-package github.nooblong.mr.file;
+package github.nooblong.mr.net;
 
 import github.nooblong.mr.MusicRestaurant;
-import io.netty.handler.codec.socks.SocksProtocolVersion;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
-import org.apache.logging.log4j.core.net.Protocol;
 
-import java.awt.*;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 public class MySimpleNetworkHandler {
 

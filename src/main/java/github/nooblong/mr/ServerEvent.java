@@ -1,17 +1,16 @@
-package github.nooblong.mr.util;
+package github.nooblong.mr;
 
 import github.nooblong.mr.MusicRestaurant;
-import github.nooblong.mr.file.MySimpleNetworkHandler;
-import net.minecraft.entity.player.PlayerEntity;
+import github.nooblong.mr.net.MySimpleNetworkHandler;
+import github.nooblong.mr.util.OperateFile;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 
 @Mod.EventBusSubscriber(modid = MusicRestaurant.MOD_ID, value = Dist.DEDICATED_SERVER)
-public class ServerEventSubscriber {
+public class ServerEvent {
 
     @SubscribeEvent
     public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {

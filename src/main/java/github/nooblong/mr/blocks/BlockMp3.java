@@ -1,30 +1,24 @@
 package github.nooblong.mr.blocks;
 
-import github.nooblong.mr.MusicRestaurant;
-import github.nooblong.mr.file.GuiDataPacket;
-import github.nooblong.mr.file.MusicListPacket;
-import github.nooblong.mr.file.MySimpleNetworkHandler;
+import github.nooblong.mr.net.GuiDataPacket;
+import github.nooblong.mr.net.MySimpleNetworkHandler;
 import github.nooblong.mr.gui.Mp3Gui;
 import github.nooblong.mr.init.ModSounds;
 import github.nooblong.mr.tileentity.Mp3TileEntity;
-import github.nooblong.mr.tileentity.RubyChestTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class BlockMp3 extends BlockBase {

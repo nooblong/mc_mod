@@ -3,18 +3,14 @@ package github.nooblong.mr.gui;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.systems.RenderSystem;
 import github.nooblong.mr.MusicRestaurant;
-import github.nooblong.mr.file.GuiDataPacket;
-import github.nooblong.mr.file.MySimpleNetworkHandler;
 import github.nooblong.mr.tileentity.Mp3TileEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.ImageButton;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.UnknownFormatConversionException;
 
 public class Mp3Gui extends Screen {

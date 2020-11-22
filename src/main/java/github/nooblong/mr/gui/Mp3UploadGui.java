@@ -1,7 +1,7 @@
 package github.nooblong.mr.gui;
 
-import github.nooblong.mr.file.GuiDataPacket;
-import github.nooblong.mr.file.MySimpleNetworkHandler;
+import github.nooblong.mr.net.GuiDataPacket;
+import github.nooblong.mr.net.MySimpleNetworkHandler;
 import github.nooblong.mr.tileentity.Mp3TileEntity;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.ToggleWidget;

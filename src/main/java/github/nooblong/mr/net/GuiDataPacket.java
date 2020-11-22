@@ -1,4 +1,4 @@
-package github.nooblong.mr.file;
+package github.nooblong.mr.net;
 
 import github.nooblong.mr.tileentity.Mp3TileEntity;
 import net.minecraft.client.Minecraft;
@@ -6,13 +6,10 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.loading.FMLCommonLaunchHandler;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-import java.util.ArrayList;
 import java.util.function.Supplier;
 
 public class GuiDataPacket {
