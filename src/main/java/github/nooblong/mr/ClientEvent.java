@@ -1,6 +1,7 @@
 package github.nooblong.mr;
 
 import github.nooblong.mr.MusicRestaurant;
+import github.nooblong.mr.gui.ContainerScreenMp3Player;
 import github.nooblong.mr.gui.RubyChestGui;
 import github.nooblong.mr.init.ModContainerTypes;
 import net.minecraft.client.gui.ScreenManager;
@@ -15,5 +16,6 @@ public class ClientEvent {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event){
         ScreenManager.registerFactory(ModContainerTypes.RUBY_CHEST.get(), RubyChestGui::new);
+        ScreenManager.registerFactory(ModContainerTypes.containerTypeMp3Player, ContainerScreenMp3Player::new);
     }
 }
