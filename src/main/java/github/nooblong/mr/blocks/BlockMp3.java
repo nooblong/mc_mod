@@ -1,7 +1,7 @@
 package github.nooblong.mr.blocks;
 
 import github.nooblong.mr.net.GuiDataPacket;
-import github.nooblong.mr.net.MySimpleNetworkHandler;
+import github.nooblong.mr.net.SimpleNetworkHandler;
 import github.nooblong.mr.gui.Mp3Gui;
 import github.nooblong.mr.init.ModSounds;
 import github.nooblong.mr.tileentity.Mp3TileEntity;
@@ -28,7 +28,7 @@ public class BlockMp3 extends BlockBase {
         if (!worldIn.isRemote){
             Mp3TileEntity t = (Mp3TileEntity) worldIn.getTileEntity(pos);
             System.out.println("server send Gui packet");
-            MySimpleNetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity)player), new GuiDataPacket(
+            SimpleNetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity)player), new GuiDataPacket(
                     t.isEnablePlay(),t.getPos1x(),t.getPos1y(),t.getPos1z(),t.getPos2x(),t.getPos2y(),t.getPos2z(),t.getPos()
             ));
             return ActionResultType.SUCCESS;

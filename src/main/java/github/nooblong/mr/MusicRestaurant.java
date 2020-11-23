@@ -1,20 +1,14 @@
 package github.nooblong.mr;
 
-import com.mojang.brigadier.CommandDispatcher;
-import github.nooblong.mr.command.MrCommand;
-import github.nooblong.mr.net.MySimpleNetworkHandler;
+import github.nooblong.mr.net.PacketManager;
+import github.nooblong.mr.net.SimpleNetworkHandler;
 import github.nooblong.mr.init.*;
-import net.minecraft.command.CommandSource;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.CommandEvent;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 public class MusicRestaurant {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MOD_ID = "mr";
+    public static PacketManager PACKET_MANAGER;
     public MusicRestaurant() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
@@ -32,13 +27,13 @@ public class MusicRestaurant {
         ModContainerTypes.CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModTileEntityTypes.TILE_ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 
-        MySimpleNetworkHandler.registerMessage();
+        SimpleNetworkHandler.registerMessage();
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-
+        PACKET_MANAGER = new PacketManager();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

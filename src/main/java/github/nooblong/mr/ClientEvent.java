@@ -1,4 +1,4 @@
-package github.nooblong.mr.util;
+package github.nooblong.mr;
 
 import github.nooblong.mr.MusicRestaurant;
 import github.nooblong.mr.gui.RubyChestGui;
@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = MusicRestaurant.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class ClientEventSubscriber {
+public class ClientEvent {
 
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event){

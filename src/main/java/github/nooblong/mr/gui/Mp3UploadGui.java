@@ -1,7 +1,7 @@
 package github.nooblong.mr.gui;
 
 import github.nooblong.mr.net.GuiDataPacket;
-import github.nooblong.mr.net.MySimpleNetworkHandler;
+import github.nooblong.mr.net.SimpleNetworkHandler;
 import github.nooblong.mr.tileentity.Mp3TileEntity;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.ToggleWidget;
@@ -71,7 +71,7 @@ public class Mp3UploadGui extends Mp3Gui {
     @Override
     public void saveAndQuit() {
         System.out.println("client send GuiPacket");
-        MySimpleNetworkHandler.INSTANCE.sendToServer(new GuiDataPacket(
+        SimpleNetworkHandler.INSTANCE.sendToServer(new GuiDataPacket(
                 mp3TileEntity.isEnablePlay(),mp3TileEntity.getPos1x(), mp3TileEntity.getPos1y(),mp3TileEntity.getPos1z(),
                 mp3TileEntity.getPos2x(), mp3TileEntity.getPos2y(), mp3TileEntity.getPos2z(), mp3TileEntity.getPos()));
     }
