@@ -27,4 +27,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> MP3_ITEM = ITEMS.register("mp3",
             ()->new BlockItemBase(ModBlocks.MP3.get()));
+
+    public static final RegistryObject<Item> SOUND_BLOCK_ITEM = ITEMS.register("sound_block",
+            () -> new BlockItemBase(ModBlocks.SOUND_BLOCK.get()));
 }

@@ -36,8 +36,4 @@ public class MusicTools {
         }
     }
 
-    public static File getMusicFile(ServerPlayerEntity playerMP, UUID uuid){
-        File musicFolder = new File(playerMP.getServerWorld().getSaveHandler().getWorldDirectory(), "mr_music");
-        return new File(musicFolder, uuid.toString() + ".ogg");
-    }
 }

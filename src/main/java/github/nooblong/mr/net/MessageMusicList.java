@@ -1,5 +1,6 @@
 package github.nooblong.mr.net;
 
+import github.nooblong.mr.sound.MusicCache;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -25,7 +26,8 @@ public class MessageMusicList implements Message {
 
     @Override
     public void executeClientSide(NetworkEvent.Context context) {
-
+        System.out.println("receive packet " + list);
+        MusicCache.INSTANCE.musicList = list;
     }
 
     @Override

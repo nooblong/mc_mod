@@ -21,6 +21,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import static net.minecraft.util.math.MathHelper.clamp;
 
@@ -31,8 +32,12 @@ public class MrCommand {
                 .requires((commandSource) -> commandSource.hasPermissionLevel(0))
                 .then(Commands.literal("upload")
                         .then(Commands.argument("path", StringArgumentType.string())
-                        .executes(MrCommand::upLoad))
-                )
+                                .executes(MrCommand::upLoad)))
+
+                .then(Commands.literal("download")
+                        .then(Commands.argument("uuid", StringArgumentType.string())
+                                .executes(MrCommand::download)))
+
                 .executes(commandContext -> sendMessage(commandContext, "Nothing to say!"));
 
         dispatcher.register(mrCommand);
@@ -43,6 +48,12 @@ public class MrCommand {
         MessageCommandUpload messageCommandUpload = new MessageCommandUpload(pathValue);
         ServerPlayerEntity playerMP = (ServerPlayerEntity) commandContext.getSource().getEntity();
         SimpleNetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> playerMP), messageCommandUpload);
+        return 1;
+    }
+
+    static int download(CommandContext<CommandSource> commandContext) throws CommandSyntaxException {
+        String uuid = StringArgumentType.getString(commandContext, "uuid");
+        MusicProcessor.sendMusicToClient(UUID.fromString(uuid), commandContext.getSource().asPlayer());
         return 1;
     }
 

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "mr:block/sound_block"
+    }
+  }
+}

@@ -2,11 +2,13 @@ package github.nooblong.mr.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import github.nooblong.mr.items.ContainerMp3Player;
+import github.nooblong.mr.net.MessageRequestMusicList;
+import github.nooblong.mr.sound.MusicCache;
+import github.nooblong.mr.net.SimpleNetworkHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
@@ -15,6 +17,8 @@ public class ContainerScreenMp3Player extends ContainerScreen<ContainerMp3Player
     private static final ResourceLocation TEXTURE = new ResourceLocation("mr", "textures/gui/mp3_player.png");
 
     private static final ResourceLocation BUTTON = new ResourceLocation("mr", "textures/items/ruby.png");
+
+    private MusicCache musicCache = MusicCache.INSTANCE;
 
     public ContainerScreenMp3Player(ContainerMp3Player screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
@@ -41,7 +45,9 @@ public class ContainerScreenMp3Player extends ContainerScreen<ContainerMp3Player
         addButton(new ImageButton(drawX(10), drawY(135), 24, 20,
                 0, 0, 0, BUTTON,
                 (i) -> {
-                    System.out.println("button");
+                    System.out.println("refresh");
+                    SimpleNetworkHandler.INSTANCE.sendToServer(new MessageRequestMusicList(1));
+                    System.out.println(musicCache.musicList);
                 }));
     }
 
@@ -59,6 +65,12 @@ public class ContainerScreenMp3Player extends ContainerScreen<ContainerMp3Player
         this.renderBackground();
         super.render(mouseX, mouseY, mouseZ);
         this.renderHoveredToolTip(mouseX,mouseY);
+
+        int startY = drawY(69);
+        for (String s : musicCache.musicList) {
+            font.drawString(s, drawX(45), startY, 0xffffff);
+            startY += 10;
+        }
     }
 
     @Override

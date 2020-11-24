@@ -23,7 +23,7 @@ public class SimpleNetworkHandler {
             "1.15.2"::equals
     );
 
-    public static void registerMessage(){
+    public static void registerMessage() {
         MusicRestaurant.LOGGER.info("MySimpleNetworkHandler.registerMessage");
         int id = 0;
         INSTANCE.registerMessage(
@@ -32,6 +32,13 @@ public class SimpleNetworkHandler {
                 MessagePartialMusic::toBytes,
                 packetBuffer -> new MessagePartialMusic().fromBytes(packetBuffer),
                 (messagePartialMusic, contextSupplier) -> messagePartialMusic.executeServerSide(contextSupplier.get())
+        );
+        INSTANCE.registerMessage(
+                ++id,
+                DownloadPartialMusic.class,
+                DownloadPartialMusic::toBytes,
+                packetBuffer -> new DownloadPartialMusic().fromBytes(packetBuffer),
+                (downloadPartialMusic, contextSupplier) -> downloadPartialMusic.executeServerSide(contextSupplier.get())
         );
         INSTANCE.registerMessage(
                 ++id,
@@ -46,6 +53,20 @@ public class SimpleNetworkHandler {
                 GuiDataPacket::encode,
                 GuiDataPacket::new,
                 GuiDataPacket::handle
+        );
+        INSTANCE.registerMessage(
+                ++id,
+                MessageRequestMusicList.class,
+                MessageRequestMusicList::toBytes,
+                packetBuffer -> new MessageRequestMusicList().fromBytes(packetBuffer),
+                ((messageRequestMusicList, contextSupplier) -> messageRequestMusicList.executeServerSide(contextSupplier.get()))
+        );
+        INSTANCE.registerMessage(
+                ++id,
+                MessageMusicList.class,
+                MessageMusicList::toBytes,
+                packetBuffer -> new MessageMusicList().fromBytes(packetBuffer),
+                ((messageMusicList, contextSupplier) -> messageMusicList.executeClientSide(contextSupplier.get()))
         );
     }
 }
